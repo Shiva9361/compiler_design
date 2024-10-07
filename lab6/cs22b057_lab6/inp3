@@ -1,0 +1,13 @@
+r += ---a + -b;
+rr = a;
+r -= a++ / c + 2 - 10 +(a+b);
+res /= a++ b;
+res *= ((a+b)));
+res = (++p * q--) + a;
+res = a + ++b--;
+res = 10++;
+res = --x / --y;
+res = ++10;
+res = --10;
+res = 10--;
+res = a + ++b-;
