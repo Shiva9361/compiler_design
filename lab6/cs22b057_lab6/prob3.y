@@ -102,7 +102,7 @@ char* postorder(struct Node* root){
 		return re;
 	}
 	if (root->type == 2){
-		printf("%s = - %s\n",label,l);
+		printf("t%d = - %s\n",label,l);
 		char *re = (char*)malloc(sizeof(char)*100);
         sprintf(re,"t%d",label);
 		label++;

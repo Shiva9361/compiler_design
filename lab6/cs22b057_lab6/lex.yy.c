@@ -449,8 +449,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "prob3.l"
-#line 2 "prob3.l"
+#line 1 "prob.l"
+#line 2 "prob.l"
 #include<stdio.h>
 #include<string.h>
 #include"y.tab.h"
@@ -678,7 +678,7 @@ YY_DECL
 		}
 
 	{
-#line 17 "prob3.l"
+#line 17 "prob.l"
 
 
 #line 685 "lex.yy.c"
@@ -740,58 +740,58 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "prob3.l"
+#line 19 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return INC;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 20 "prob3.l"
+#line 20 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return DEC;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "prob3.l"
+#line 21 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return PASN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 22 "prob3.l"
+#line 22 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return MASN;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 23 "prob3.l"
+#line 23 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return SASN;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 24 "prob3.l"
+#line 24 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return DASN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 25 "prob3.l"
+#line 25 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return NUM;} 
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 26 "prob3.l"
+#line 26 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return IDEN;}
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 27 "prob3.l"
+#line 27 "prob.l"
 {append(yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 28 "prob3.l"
+#line 28 "prob.l"
 {append(yytext);strcpy(yylval.str,yytext);return yytext[0];}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 30 "prob3.l"
+#line 30 "prob.l"
 ECHO;
 	YY_BREAK
 #line 798 "lex.yy.c"
@@ -1799,7 +1799,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 30 "prob3.l"
+#line 30 "prob.l"
 
 
 

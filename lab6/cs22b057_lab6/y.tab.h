@@ -13,10 +13,9 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 27 "prob3.y"
+#line 12 "prob.y"
 typedef union{
 	char str[1000];
-	struct Node* node;
 } yy_parse_stype;
 #define YY_parse_STYPE yy_parse_stype
 #ifndef YY_USE_CLASS
@@ -197,8 +196,9 @@ typedef
 #define	SASN	261
 #define	INC	262
 #define	DEC	263
-#define	IDEN	264
-#define	NUM	265
+#define	UMINUS	264
+#define	IDEN	265
+#define	NUM	266
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -253,6 +253,7 @@ static const int DASN;
 static const int SASN;
 static const int INC;
 static const int DEC;
+static const int UMINUS;
 static const int IDEN;
 static const int NUM;
 
@@ -269,8 +270,9 @@ static const int NUM;
 	,SASN=261
 	,INC=262
 	,DEC=263
-	,IDEN=264
-	,NUM=265
+	,UMINUS=264
+	,IDEN=265
+	,NUM=266
 
 
 #line 215 "/usr/share/bison++/bison.h"
