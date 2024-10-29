@@ -1,0 +1,18 @@
+if a>=b
+{
+    a+=b;
+    if(a>b)
+    {
+        a=b;
+    }
+    else
+    {
+        a---b;
+    }
+}
+else
+{
+    a+=b;
+}
+a+b;
+-(a+b);

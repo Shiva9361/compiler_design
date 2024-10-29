@@ -228,8 +228,10 @@ EXPR: EXPR '+' EXPR {if (!e){char* t = genvar();$$ = createExpr();strcpy($$->str
 	| EXPR '%' EXPR {if (!e){char* t = genvar();$$ = createExpr();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s % %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
 	| '(' EXPR ')'  {if (!e){strcpy($$->str,$2->str);}}
     | '(' EXPR error {e=1;strcpy(err,"missing R-Paren");yyerrok;}
+	| EXPR OP ';'{e=1;strcpy(err,"Missing operand");yyerrok;}
     | TERM {$$ = createExpr();strcpy($$->str,$1);$$->lv=$1->lv;};
 
+OP: '+' | '-' | '*' | '/' | '%';
 TERM: UN OPR IDEN B  {if (strcmp($1,"-")){
 							char*t2=genvar();
 							sprintf(imcode[code],"%d %s = %s %c 1\n",code,t2,$3,$2[0]);code++;

@@ -6,36 +6,36 @@ Terminals which are not used:
    EOF
 
 
-Conflict in state 49 between rule 31 and token '+' resolved as reduce.
-Conflict in state 49 between rule 31 and token '-' resolved as reduce.
-Conflict in state 49 between rule 31 and token '/' resolved as shift.
-Conflict in state 49 between rule 31 and token '*' resolved as shift.
-Conflict in state 49 between rule 31 and token '%' resolved as shift.
-Conflict in state 50 between rule 32 and token '+' resolved as reduce.
-Conflict in state 50 between rule 32 and token '-' resolved as reduce.
-Conflict in state 50 between rule 32 and token '/' resolved as shift.
-Conflict in state 50 between rule 32 and token '*' resolved as shift.
-Conflict in state 50 between rule 32 and token '%' resolved as shift.
-Conflict in state 51 between rule 34 and token '+' resolved as reduce.
-Conflict in state 51 between rule 34 and token '-' resolved as reduce.
-Conflict in state 51 between rule 34 and token '/' resolved as reduce.
-Conflict in state 51 between rule 34 and token '*' resolved as reduce.
-Conflict in state 51 between rule 34 and token '%' resolved as reduce.
-Conflict in state 52 between rule 33 and token '+' resolved as reduce.
-Conflict in state 52 between rule 33 and token '-' resolved as reduce.
-Conflict in state 52 between rule 33 and token '/' resolved as reduce.
-Conflict in state 52 between rule 33 and token '*' resolved as reduce.
-Conflict in state 52 between rule 33 and token '%' resolved as reduce.
-Conflict in state 53 between rule 35 and token '+' resolved as reduce.
-Conflict in state 53 between rule 35 and token '-' resolved as reduce.
-Conflict in state 53 between rule 35 and token '/' resolved as reduce.
-Conflict in state 53 between rule 35 and token '*' resolved as reduce.
-Conflict in state 53 between rule 35 and token '%' resolved as reduce.
-Conflict in state 92 between rule 18 and token OR resolved as reduce.
-Conflict in state 92 between rule 18 and token AND resolved as shift.
-Conflict in state 93 between rule 19 and token OR resolved as reduce.
-Conflict in state 93 between rule 19 and token AND resolved as reduce.
-Conflict in state 94 between rule 3 and token ELSE resolved as shift.
+Conflict in state 50 between rule 31 and token '+' resolved as reduce.
+Conflict in state 50 between rule 31 and token '-' resolved as reduce.
+Conflict in state 50 between rule 31 and token '/' resolved as shift.
+Conflict in state 50 between rule 31 and token '*' resolved as shift.
+Conflict in state 50 between rule 31 and token '%' resolved as shift.
+Conflict in state 51 between rule 32 and token '+' resolved as reduce.
+Conflict in state 51 between rule 32 and token '-' resolved as reduce.
+Conflict in state 51 between rule 32 and token '/' resolved as shift.
+Conflict in state 51 between rule 32 and token '*' resolved as shift.
+Conflict in state 51 between rule 32 and token '%' resolved as shift.
+Conflict in state 52 between rule 34 and token '+' resolved as reduce.
+Conflict in state 52 between rule 34 and token '-' resolved as reduce.
+Conflict in state 52 between rule 34 and token '/' resolved as reduce.
+Conflict in state 52 between rule 34 and token '*' resolved as reduce.
+Conflict in state 52 between rule 34 and token '%' resolved as reduce.
+Conflict in state 53 between rule 33 and token '+' resolved as reduce.
+Conflict in state 53 between rule 33 and token '-' resolved as reduce.
+Conflict in state 53 between rule 33 and token '/' resolved as reduce.
+Conflict in state 53 between rule 33 and token '*' resolved as reduce.
+Conflict in state 53 between rule 33 and token '%' resolved as reduce.
+Conflict in state 54 between rule 35 and token '+' resolved as reduce.
+Conflict in state 54 between rule 35 and token '-' resolved as reduce.
+Conflict in state 54 between rule 35 and token '/' resolved as reduce.
+Conflict in state 54 between rule 35 and token '*' resolved as reduce.
+Conflict in state 54 between rule 35 and token '%' resolved as reduce.
+Conflict in state 94 between rule 18 and token OR resolved as reduce.
+Conflict in state 94 between rule 18 and token AND resolved as shift.
+Conflict in state 95 between rule 19 and token OR resolved as reduce.
+Conflict in state 95 between rule 19 and token AND resolved as reduce.
+Conflict in state 96 between rule 3 and token ELSE resolved as shift.
 
 Grammar
 rule 1    S -> STMNTS M
@@ -75,38 +75,44 @@ rule 34   EXPR -> EXPR '/' EXPR
 rule 35   EXPR -> EXPR '%' EXPR
 rule 36   EXPR -> '(' EXPR ')'
 rule 37   EXPR -> '(' EXPR error
-rule 38   EXPR -> TERM
-rule 39   TERM -> UN OPR IDEN B
-rule 40   TERM -> UN IDEN OPR B
-rule 41   TERM -> UN NUM C
-rule 42   TERM -> UN IDEN C
-rule 43   TERM -> UN INC NUM
-rule 44   TERM -> UN DEC NUM
-rule 45   TERM -> UN NUM INC
-rule 46   TERM -> UN NUM DEC
-rule 47   OPR -> INC
-rule 48   OPR -> DEC
-rule 49   B -> OPR
-rule 50   B -> IDEN
-rule 51   B -> NUM
-rule 52   B ->		/* empty */
-rule 53   C -> IDEN
-rule 54   C -> NUM
-rule 55   C ->		/* empty */
-rule 56   UN -> '-'
-rule 57   UN ->		/* empty */
+rule 38   EXPR -> EXPR OP ';'
+rule 39   EXPR -> TERM
+rule 40   OP -> '+'
+rule 41   OP -> '-'
+rule 42   OP -> '*'
+rule 43   OP -> '/'
+rule 44   OP -> '%'
+rule 45   TERM -> UN OPR IDEN B
+rule 46   TERM -> UN IDEN OPR B
+rule 47   TERM -> UN NUM C
+rule 48   TERM -> UN IDEN C
+rule 49   TERM -> UN INC NUM
+rule 50   TERM -> UN DEC NUM
+rule 51   TERM -> UN NUM INC
+rule 52   TERM -> UN NUM DEC
+rule 53   OPR -> INC
+rule 54   OPR -> DEC
+rule 55   B -> OPR
+rule 56   B -> IDEN
+rule 57   B -> NUM
+rule 58   B ->		/* empty */
+rule 59   C -> IDEN
+rule 60   C -> NUM
+rule 61   C ->		/* empty */
+rule 62   UN -> '-'
+rule 63   UN ->		/* empty */
 
 Terminals, with rules where they appear
 
 $ (-1)
-'%' (37) 35
+'%' (37) 35 44
 '(' (40) 3 4 6 36 37
 ')' (41) 3 4 6 36
-'*' (42) 33
-'+' (43) 31
-'-' (45) 32 56
-'/' (47) 34
-';' (59) 2 8
+'*' (42) 33 42
+'+' (43) 31 40
+'-' (45) 32 41 62
+'/' (47) 34 43
+';' (59) 2 8 38
 '=' (61) 13
 '{' (123) 7
 '}' (125) 7
@@ -123,12 +129,12 @@ LE (266) 24
 GE (267) 25
 EQ (268) 22
 NE (269) 23
-INC (270) 43 45 47
-DEC (271) 44 46 48
+INC (270) 49 51 53
+DEC (271) 50 52 54
 UMINUS (272)
 ELSE (273) 4
-IDEN (274) 39 40 42 50 53
-NUM (275) 41 43 44 45 46 51 54
+IDEN (274) 45 46 48 56 59
+NUM (275) 47 49 50 51 52 57 60
 IF (276) 3 4 5
 TR (277) 26
 FL (278) 27
@@ -154,18 +160,20 @@ NN (43)
 ASNEXPR (44)
     on left: 30, on right: 2
 EXPR (45)
-    on left: 31 32 33 34 35 36 37 38, on right: 8 9 20 21 22 23 24
-    25 30 31 32 33 34 35 36 37
-TERM (46)
-    on left: 39 40 41 42 43 44 45 46, on right: 38
-OPR (47)
-    on left: 47 48, on right: 39 40 49
-B (48)
-    on left: 49 50 51 52, on right: 39 40
-C (49)
-    on left: 53 54 55, on right: 41 42
-UN (50)
-    on left: 56 57, on right: 39 40 41 42 43 44 45 46
+    on left: 31 32 33 34 35 36 37 38 39, on right: 8 9 20 21 22 23
+    24 25 30 31 32 33 34 35 36 37 38
+OP (46)
+    on left: 40 41 42 43 44, on right: 38
+TERM (47)
+    on left: 45 46 47 48 49 50 51 52, on right: 39
+OPR (48)
+    on left: 53 54, on right: 45 46 55
+B (49)
+    on left: 55 56 57 58, on right: 45 46
+C (50)
+    on left: 59 60 61, on right: 47 48
+UN (51)
+    on left: 62 63, on right: 45 46 47 48 49 50 51 52
 
 
 state 0
@@ -176,9 +184,9 @@ state 0
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    S   	go to state 101
+    S   	go to state 103
     A   	go to state 6
     STMNTS	go to state 7
     ASNEXPR	go to state 8
@@ -190,9 +198,9 @@ state 0
 
 state 1
 
-    UN  ->  '-' .   (rule 56)
+    UN  ->  '-' .   (rule 62)
 
-    $default	reduce using rule 56 (UN)
+    $default	reduce using rule 62 (UN)
 
 
 
@@ -204,7 +212,7 @@ state 2
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     EXPR	go to state 12
     TERM	go to state 10
@@ -243,7 +251,7 @@ state 5
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     A   	go to state 6
     STMNTS	go to state 16
@@ -304,6 +312,7 @@ state 9
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     error	shift, and go to state 21
     PASN	shift, and go to state 22
@@ -319,34 +328,35 @@ state 9
     '=' 	shift, and go to state 32
 
     ASSGN	go to state 33
+    OP  	go to state 34
 
 
 
 state 10
 
-    EXPR  ->  TERM .   (rule 38)
+    EXPR  ->  TERM .   (rule 39)
 
-    $default	reduce using rule 38 (EXPR)
+    $default	reduce using rule 39 (EXPR)
 
 
 
 state 11
 
-    TERM  ->  UN . OPR IDEN B   (rule 39)
-    TERM  ->  UN . IDEN OPR B   (rule 40)
-    TERM  ->  UN . NUM C   (rule 41)
-    TERM  ->  UN . IDEN C   (rule 42)
-    TERM  ->  UN . INC NUM   (rule 43)
-    TERM  ->  UN . DEC NUM   (rule 44)
-    TERM  ->  UN . NUM INC   (rule 45)
-    TERM  ->  UN . NUM DEC   (rule 46)
+    TERM  ->  UN . OPR IDEN B   (rule 45)
+    TERM  ->  UN . IDEN OPR B   (rule 46)
+    TERM  ->  UN . NUM C   (rule 47)
+    TERM  ->  UN . IDEN C   (rule 48)
+    TERM  ->  UN . INC NUM   (rule 49)
+    TERM  ->  UN . DEC NUM   (rule 50)
+    TERM  ->  UN . NUM INC   (rule 51)
+    TERM  ->  UN . NUM DEC   (rule 52)
 
-    INC 	shift, and go to state 34
-    DEC 	shift, and go to state 35
-    IDEN	shift, and go to state 36
-    NUM 	shift, and go to state 37
+    INC 	shift, and go to state 35
+    DEC 	shift, and go to state 36
+    IDEN	shift, and go to state 37
+    NUM 	shift, and go to state 38
 
-    OPR 	go to state 38
+    OPR 	go to state 39
 
 
 
@@ -359,14 +369,17 @@ state 12
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
     EXPR  ->  '(' EXPR . ')'   (rule 36)
     EXPR  ->  '(' EXPR . error   (rule 37)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
-    error	shift, and go to state 39
+    error	shift, and go to state 40
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
     '/' 	shift, and go to state 28
     '*' 	shift, and go to state 29
     '%' 	shift, and go to state 30
-    ')' 	shift, and go to state 40
+    ')' 	shift, and go to state 41
+
+    OP  	go to state 34
 
 
 
@@ -385,13 +398,13 @@ state 14
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
-    TR  	shift, and go to state 41
-    FL  	shift, and go to state 42
+    TR  	shift, and go to state 42
+    FL  	shift, and go to state 43
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    BOOLEXPR	go to state 43
-    EXPR	go to state 44
+    BOOLEXPR	go to state 44
+    EXPR	go to state 45
     TERM	go to state 10
     UN  	go to state 11
 
@@ -401,7 +414,7 @@ state 15
 
     A  ->  WHILE M . '(' BOOLEXPR ')' M A   (rule 6)
 
-    '(' 	shift, and go to state 45
+    '(' 	shift, and go to state 46
 
 
 
@@ -412,7 +425,7 @@ state 16
     STMNTS  ->  STMNTS . error   (rule 12)
 
     error	shift, and go to state 18
-    '}' 	shift, and go to state 46
+    '}' 	shift, and go to state 47
 
     '-' 	reduce using rule 28 (M)
     INC 	reduce using rule 28 (M)
@@ -422,7 +435,7 @@ state 16
     NUM 	reduce using rule 28 (M)
     IF  	reduce using rule 28 (M)
 
-    M   	go to state 47
+    M   	go to state 48
 
 
 
@@ -455,9 +468,9 @@ state 19
 
     $   	reduce using rule 1 (S)
     WHILE	[reduce using rule 1 (S)]
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    A   	go to state 48
+    A   	go to state 49
     ASNEXPR	go to state 8
     EXPR	go to state 9
     TERM	go to state 10
@@ -516,13 +529,15 @@ state 25
 state 26
 
     EXPR  ->  EXPR '+' . EXPR   (rule 31)
+    OP  ->  '+' .   (rule 40)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    ';' 	reduce using rule 40 (OP)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 49
+    EXPR	go to state 50
     TERM	go to state 10
     UN  	go to state 11
 
@@ -531,13 +546,15 @@ state 26
 state 27
 
     EXPR  ->  EXPR '-' . EXPR   (rule 32)
+    OP  ->  '-' .   (rule 41)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    ';' 	reduce using rule 41 (OP)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 50
+    EXPR	go to state 51
     TERM	go to state 10
     UN  	go to state 11
 
@@ -546,13 +563,15 @@ state 27
 state 28
 
     EXPR  ->  EXPR '/' . EXPR   (rule 34)
+    OP  ->  '/' .   (rule 43)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    ';' 	reduce using rule 43 (OP)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 51
+    EXPR	go to state 52
     TERM	go to state 10
     UN  	go to state 11
 
@@ -561,13 +580,15 @@ state 28
 state 29
 
     EXPR  ->  EXPR '*' . EXPR   (rule 33)
+    OP  ->  '*' .   (rule 42)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    ';' 	reduce using rule 42 (OP)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 52
+    EXPR	go to state 53
     TERM	go to state 10
     UN  	go to state 11
 
@@ -576,13 +597,15 @@ state 29
 state 30
 
     EXPR  ->  EXPR '%' . EXPR   (rule 35)
+    OP  ->  '%' .   (rule 44)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    ';' 	reduce using rule 44 (OP)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 53
+    EXPR	go to state 54
     TERM	go to state 10
     UN  	go to state 11
 
@@ -611,9 +634,9 @@ state 33
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    EXPR	go to state 54
+    EXPR	go to state 55
     TERM	go to state 10
     UN  	go to state 11
 
@@ -621,69 +644,77 @@ state 33
 
 state 34
 
-    TERM  ->  UN INC . NUM   (rule 43)
-    OPR  ->  INC .   (rule 47)
+    EXPR  ->  EXPR OP . ';'   (rule 38)
 
-    NUM 	shift, and go to state 55
-
-    $default	reduce using rule 47 (OPR)
+    ';' 	shift, and go to state 56
 
 
 
 state 35
 
-    TERM  ->  UN DEC . NUM   (rule 44)
-    OPR  ->  DEC .   (rule 48)
+    TERM  ->  UN INC . NUM   (rule 49)
+    OPR  ->  INC .   (rule 53)
 
-    NUM 	shift, and go to state 56
+    NUM 	shift, and go to state 57
 
-    $default	reduce using rule 48 (OPR)
+    $default	reduce using rule 53 (OPR)
 
 
 
 state 36
 
-    TERM  ->  UN IDEN . OPR B   (rule 40)
-    TERM  ->  UN IDEN . C   (rule 42)
+    TERM  ->  UN DEC . NUM   (rule 50)
+    OPR  ->  DEC .   (rule 54)
 
-    INC 	shift, and go to state 57
-    DEC 	shift, and go to state 58
-    IDEN	shift, and go to state 59
-    NUM 	shift, and go to state 60
+    NUM 	shift, and go to state 58
 
-    $default	reduce using rule 55 (C)
-
-    OPR 	go to state 61
-    C   	go to state 62
+    $default	reduce using rule 54 (OPR)
 
 
 
 state 37
 
-    TERM  ->  UN NUM . C   (rule 41)
-    TERM  ->  UN NUM . INC   (rule 45)
-    TERM  ->  UN NUM . DEC   (rule 46)
+    TERM  ->  UN IDEN . OPR B   (rule 46)
+    TERM  ->  UN IDEN . C   (rule 48)
 
-    INC 	shift, and go to state 63
-    DEC 	shift, and go to state 64
-    IDEN	shift, and go to state 59
-    NUM 	shift, and go to state 60
+    INC 	shift, and go to state 59
+    DEC 	shift, and go to state 60
+    IDEN	shift, and go to state 61
+    NUM 	shift, and go to state 62
 
-    $default	reduce using rule 55 (C)
+    $default	reduce using rule 61 (C)
 
-    C   	go to state 65
+    OPR 	go to state 63
+    C   	go to state 64
 
 
 
 state 38
 
-    TERM  ->  UN OPR . IDEN B   (rule 39)
+    TERM  ->  UN NUM . C   (rule 47)
+    TERM  ->  UN NUM . INC   (rule 51)
+    TERM  ->  UN NUM . DEC   (rule 52)
 
-    IDEN	shift, and go to state 66
+    INC 	shift, and go to state 65
+    DEC 	shift, and go to state 66
+    IDEN	shift, and go to state 61
+    NUM 	shift, and go to state 62
+
+    $default	reduce using rule 61 (C)
+
+    C   	go to state 67
 
 
 
 state 39
+
+    TERM  ->  UN OPR . IDEN B   (rule 45)
+
+    IDEN	shift, and go to state 68
+
+
+
+state 40
 
     EXPR  ->  '(' EXPR error .   (rule 37)
 
@@ -691,7 +722,7 @@ state 39
 
 
 
-state 40
+state 41
 
     EXPR  ->  '(' EXPR ')' .   (rule 36)
 
@@ -699,7 +730,7 @@ state 40
 
 
 
-state 41
+state 42
 
     BOOLEXPR  ->  TR .   (rule 26)
 
@@ -707,7 +738,7 @@ state 41
 
 
 
-state 42
+state 43
 
     BOOLEXPR  ->  FL .   (rule 27)
 
@@ -715,20 +746,20 @@ state 42
 
 
 
-state 43
+state 44
 
     A  ->  IF '(' BOOLEXPR . ')' M A   (rule 3)
     A  ->  IF '(' BOOLEXPR . ')' M A ELSE NN M A   (rule 4)
     BOOLEXPR  ->  BOOLEXPR . OR M BOOLEXPR   (rule 18)
     BOOLEXPR  ->  BOOLEXPR . AND M BOOLEXPR   (rule 19)
 
-    OR  	shift, and go to state 67
-    AND 	shift, and go to state 68
-    ')' 	shift, and go to state 69
+    OR  	shift, and go to state 69
+    AND 	shift, and go to state 70
+    ')' 	shift, and go to state 71
 
 
 
-state 44
+state 45
 
     BOOLEXPR  ->  EXPR . LT EXPR   (rule 20)
     BOOLEXPR  ->  EXPR . GT EXPR   (rule 21)
@@ -741,40 +772,43 @@ state 44
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
-    LT  	shift, and go to state 70
-    GT  	shift, and go to state 71
-    LE  	shift, and go to state 72
-    GE  	shift, and go to state 73
-    EQ  	shift, and go to state 74
-    NE  	shift, and go to state 75
+    LT  	shift, and go to state 72
+    GT  	shift, and go to state 73
+    LE  	shift, and go to state 74
+    GE  	shift, and go to state 75
+    EQ  	shift, and go to state 76
+    NE  	shift, and go to state 77
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
     '/' 	shift, and go to state 28
     '*' 	shift, and go to state 29
     '%' 	shift, and go to state 30
 
+    OP  	go to state 34
 
 
-state 45
+
+state 46
 
     A  ->  WHILE M '(' . BOOLEXPR ')' M A   (rule 6)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
-    TR  	shift, and go to state 41
-    FL  	shift, and go to state 42
+    TR  	shift, and go to state 42
+    FL  	shift, and go to state 43
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    BOOLEXPR	go to state 76
-    EXPR	go to state 44
+    BOOLEXPR	go to state 78
+    EXPR	go to state 45
     TERM	go to state 10
     UN  	go to state 11
 
 
 
-state 46
+state 47
 
     A  ->  '{' STMNTS '}' .   (rule 7)
 
@@ -782,7 +816,7 @@ state 46
 
 
 
-state 47
+state 48
 
     STMNTS  ->  STMNTS M . A   (rule 10)
 
@@ -792,9 +826,9 @@ state 47
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    A   	go to state 48
+    A   	go to state 49
     ASNEXPR	go to state 8
     EXPR	go to state 9
     TERM	go to state 10
@@ -802,7 +836,7 @@ state 47
 
 
 
-state 48
+state 49
 
     STMNTS  ->  STMNTS M A .   (rule 10)
 
@@ -810,7 +844,7 @@ state 48
 
 
 
-state 49
+state 50
 
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
     EXPR  ->  EXPR '+' EXPR .   (rule 31)
@@ -818,6 +852,7 @@ state 49
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '/' 	shift, and go to state 28
     '*' 	shift, and go to state 29
@@ -825,22 +860,7 @@ state 49
 
     $default	reduce using rule 31 (EXPR)
 
-
-
-state 50
-
-    EXPR  ->  EXPR . '+' EXPR   (rule 31)
-    EXPR  ->  EXPR . '-' EXPR   (rule 32)
-    EXPR  ->  EXPR '-' EXPR .   (rule 32)
-    EXPR  ->  EXPR . '*' EXPR   (rule 33)
-    EXPR  ->  EXPR . '/' EXPR   (rule 34)
-    EXPR  ->  EXPR . '%' EXPR   (rule 35)
-
-    '/' 	shift, and go to state 28
-    '*' 	shift, and go to state 29
-    '%' 	shift, and go to state 30
-
-    $default	reduce using rule 32 (EXPR)
+    OP  	go to state 34
 
 
 
@@ -848,13 +868,19 @@ state 51
 
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
     EXPR  ->  EXPR . '-' EXPR   (rule 32)
+    EXPR  ->  EXPR '-' EXPR .   (rule 32)
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
-    EXPR  ->  EXPR '/' EXPR .   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
+    '/' 	shift, and go to state 28
+    '*' 	shift, and go to state 29
+    '%' 	shift, and go to state 30
 
-    $default	reduce using rule 34 (EXPR)
+    $default	reduce using rule 32 (EXPR)
+
+    OP  	go to state 34
 
 
 
@@ -863,12 +889,15 @@ state 52
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
     EXPR  ->  EXPR . '-' EXPR   (rule 32)
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
-    EXPR  ->  EXPR '*' EXPR .   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
+    EXPR  ->  EXPR '/' EXPR .   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
 
-    $default	reduce using rule 33 (EXPR)
+    $default	reduce using rule 34 (EXPR)
+
+    OP  	go to state 34
 
 
 
@@ -877,16 +906,36 @@ state 53
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
     EXPR  ->  EXPR . '-' EXPR   (rule 32)
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
+    EXPR  ->  EXPR '*' EXPR .   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
-    EXPR  ->  EXPR '%' EXPR .   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
 
-    $default	reduce using rule 35 (EXPR)
+    $default	reduce using rule 33 (EXPR)
+
+    OP  	go to state 34
 
 
 
 state 54
+
+    EXPR  ->  EXPR . '+' EXPR   (rule 31)
+    EXPR  ->  EXPR . '-' EXPR   (rule 32)
+    EXPR  ->  EXPR . '*' EXPR   (rule 33)
+    EXPR  ->  EXPR . '/' EXPR   (rule 34)
+    EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR '%' EXPR .   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
+
+
+    $default	reduce using rule 35 (EXPR)
+
+    OP  	go to state 34
+
+
+
+state 55
 
     ASNEXPR  ->  EXPR ASSGN EXPR .   (rule 30)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -894,6 +943,7 @@ state 54
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -903,144 +953,133 @@ state 54
 
     $default	reduce using rule 30 (ASNEXPR)
 
-
-
-state 55
-
-    TERM  ->  UN INC NUM .   (rule 43)
-
-    $default	reduce using rule 43 (TERM)
+    OP  	go to state 34
 
 
 
 state 56
 
-    TERM  ->  UN DEC NUM .   (rule 44)
+    EXPR  ->  EXPR OP ';' .   (rule 38)
 
-    $default	reduce using rule 44 (TERM)
+    $default	reduce using rule 38 (EXPR)
 
 
 
 state 57
 
-    OPR  ->  INC .   (rule 47)
+    TERM  ->  UN INC NUM .   (rule 49)
 
-    $default	reduce using rule 47 (OPR)
+    $default	reduce using rule 49 (TERM)
 
 
 
 state 58
 
-    OPR  ->  DEC .   (rule 48)
+    TERM  ->  UN DEC NUM .   (rule 50)
 
-    $default	reduce using rule 48 (OPR)
+    $default	reduce using rule 50 (TERM)
 
 
 
 state 59
 
-    C  ->  IDEN .   (rule 53)
+    OPR  ->  INC .   (rule 53)
 
-    $default	reduce using rule 53 (C)
+    $default	reduce using rule 53 (OPR)
 
 
 
 state 60
 
-    C  ->  NUM .   (rule 54)
+    OPR  ->  DEC .   (rule 54)
 
-    $default	reduce using rule 54 (C)
+    $default	reduce using rule 54 (OPR)
 
 
 
 state 61
 
-    TERM  ->  UN IDEN OPR . B   (rule 40)
+    C  ->  IDEN .   (rule 59)
 
-    INC 	shift, and go to state 57
-    DEC 	shift, and go to state 58
-    IDEN	shift, and go to state 77
-    NUM 	shift, and go to state 78
-
-    $default	reduce using rule 52 (B)
-
-    OPR 	go to state 79
-    B   	go to state 80
+    $default	reduce using rule 59 (C)
 
 
 
 state 62
 
-    TERM  ->  UN IDEN C .   (rule 42)
+    C  ->  NUM .   (rule 60)
 
-    $default	reduce using rule 42 (TERM)
+    $default	reduce using rule 60 (C)
 
 
 
 state 63
 
-    TERM  ->  UN NUM INC .   (rule 45)
+    TERM  ->  UN IDEN OPR . B   (rule 46)
 
-    $default	reduce using rule 45 (TERM)
+    INC 	shift, and go to state 59
+    DEC 	shift, and go to state 60
+    IDEN	shift, and go to state 79
+    NUM 	shift, and go to state 80
+
+    $default	reduce using rule 58 (B)
+
+    OPR 	go to state 81
+    B   	go to state 82
 
 
 
 state 64
 
-    TERM  ->  UN NUM DEC .   (rule 46)
+    TERM  ->  UN IDEN C .   (rule 48)
 
-    $default	reduce using rule 46 (TERM)
+    $default	reduce using rule 48 (TERM)
 
 
 
 state 65
 
-    TERM  ->  UN NUM C .   (rule 41)
+    TERM  ->  UN NUM INC .   (rule 51)
 
-    $default	reduce using rule 41 (TERM)
+    $default	reduce using rule 51 (TERM)
 
 
 
 state 66
 
-    TERM  ->  UN OPR IDEN . B   (rule 39)
+    TERM  ->  UN NUM DEC .   (rule 52)
 
-    INC 	shift, and go to state 57
-    DEC 	shift, and go to state 58
-    IDEN	shift, and go to state 77
-    NUM 	shift, and go to state 78
-
-    $default	reduce using rule 52 (B)
-
-    OPR 	go to state 79
-    B   	go to state 81
+    $default	reduce using rule 52 (TERM)
 
 
 
 state 67
 
-    BOOLEXPR  ->  BOOLEXPR OR . M BOOLEXPR   (rule 18)
+    TERM  ->  UN NUM C .   (rule 47)
 
-    $default	reduce using rule 28 (M)
-
-    M   	go to state 82
+    $default	reduce using rule 47 (TERM)
 
 
 
 state 68
 
-    BOOLEXPR  ->  BOOLEXPR AND . M BOOLEXPR   (rule 19)
+    TERM  ->  UN OPR IDEN . B   (rule 45)
 
-    $default	reduce using rule 28 (M)
+    INC 	shift, and go to state 59
+    DEC 	shift, and go to state 60
+    IDEN	shift, and go to state 79
+    NUM 	shift, and go to state 80
 
-    M   	go to state 83
+    $default	reduce using rule 58 (B)
+
+    OPR 	go to state 81
+    B   	go to state 83
 
 
 
 state 69
 
-    A  ->  IF '(' BOOLEXPR ')' . M A   (rule 3)
-    A  ->  IF '(' BOOLEXPR ')' . M A ELSE NN M A   (rule 4)
+    BOOLEXPR  ->  BOOLEXPR OR . M BOOLEXPR   (rule 18)
 
     $default	reduce using rule 28 (M)
 
@@ -1050,42 +1089,33 @@ state 69
 
 state 70
 
-    BOOLEXPR  ->  EXPR LT . EXPR   (rule 20)
+    BOOLEXPR  ->  BOOLEXPR AND . M BOOLEXPR   (rule 19)
 
-    '-' 	shift, and go to state 1
-    '(' 	shift, and go to state 2
+    $default	reduce using rule 28 (M)
 
-    $default	reduce using rule 57 (UN)
-
-    EXPR	go to state 85
-    TERM	go to state 10
-    UN  	go to state 11
+    M   	go to state 85
 
 
 
 state 71
 
-    BOOLEXPR  ->  EXPR GT . EXPR   (rule 21)
+    A  ->  IF '(' BOOLEXPR ')' . M A   (rule 3)
+    A  ->  IF '(' BOOLEXPR ')' . M A ELSE NN M A   (rule 4)
 
-    '-' 	shift, and go to state 1
-    '(' 	shift, and go to state 2
+    $default	reduce using rule 28 (M)
 
-    $default	reduce using rule 57 (UN)
-
-    EXPR	go to state 86
-    TERM	go to state 10
-    UN  	go to state 11
+    M   	go to state 86
 
 
 
 state 72
 
-    BOOLEXPR  ->  EXPR LE . EXPR   (rule 24)
+    BOOLEXPR  ->  EXPR LT . EXPR   (rule 20)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     EXPR	go to state 87
     TERM	go to state 10
@@ -1095,12 +1125,12 @@ state 72
 
 state 73
 
-    BOOLEXPR  ->  EXPR GE . EXPR   (rule 25)
+    BOOLEXPR  ->  EXPR GT . EXPR   (rule 21)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     EXPR	go to state 88
     TERM	go to state 10
@@ -1110,12 +1140,12 @@ state 73
 
 state 74
 
-    BOOLEXPR  ->  EXPR EQ . EXPR   (rule 22)
+    BOOLEXPR  ->  EXPR LE . EXPR   (rule 24)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     EXPR	go to state 89
     TERM	go to state 10
@@ -1125,12 +1155,12 @@ state 74
 
 state 75
 
-    BOOLEXPR  ->  EXPR NE . EXPR   (rule 23)
+    BOOLEXPR  ->  EXPR GE . EXPR   (rule 25)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
     EXPR	go to state 90
     TERM	go to state 10
@@ -1140,93 +1170,123 @@ state 75
 
 state 76
 
-    A  ->  WHILE M '(' BOOLEXPR . ')' M A   (rule 6)
-    BOOLEXPR  ->  BOOLEXPR . OR M BOOLEXPR   (rule 18)
-    BOOLEXPR  ->  BOOLEXPR . AND M BOOLEXPR   (rule 19)
+    BOOLEXPR  ->  EXPR EQ . EXPR   (rule 22)
 
-    OR  	shift, and go to state 67
-    AND 	shift, and go to state 68
-    ')' 	shift, and go to state 91
+    '-' 	shift, and go to state 1
+    '(' 	shift, and go to state 2
+
+    $default	reduce using rule 63 (UN)
+
+    EXPR	go to state 91
+    TERM	go to state 10
+    UN  	go to state 11
 
 
 
 state 77
 
-    B  ->  IDEN .   (rule 50)
+    BOOLEXPR  ->  EXPR NE . EXPR   (rule 23)
 
-    $default	reduce using rule 50 (B)
+    '-' 	shift, and go to state 1
+    '(' 	shift, and go to state 2
+
+    $default	reduce using rule 63 (UN)
+
+    EXPR	go to state 92
+    TERM	go to state 10
+    UN  	go to state 11
 
 
 
 state 78
 
-    B  ->  NUM .   (rule 51)
+    A  ->  WHILE M '(' BOOLEXPR . ')' M A   (rule 6)
+    BOOLEXPR  ->  BOOLEXPR . OR M BOOLEXPR   (rule 18)
+    BOOLEXPR  ->  BOOLEXPR . AND M BOOLEXPR   (rule 19)
 
-    $default	reduce using rule 51 (B)
+    OR  	shift, and go to state 69
+    AND 	shift, and go to state 70
+    ')' 	shift, and go to state 93
 
 
 
 state 79
 
-    B  ->  OPR .   (rule 49)
+    B  ->  IDEN .   (rule 56)
 
-    $default	reduce using rule 49 (B)
+    $default	reduce using rule 56 (B)
 
 
 
 state 80
 
-    TERM  ->  UN IDEN OPR B .   (rule 40)
+    B  ->  NUM .   (rule 57)
 
-    $default	reduce using rule 40 (TERM)
+    $default	reduce using rule 57 (B)
 
 
 
 state 81
 
-    TERM  ->  UN OPR IDEN B .   (rule 39)
+    B  ->  OPR .   (rule 55)
 
-    $default	reduce using rule 39 (TERM)
+    $default	reduce using rule 55 (B)
 
 
 
 state 82
 
-    BOOLEXPR  ->  BOOLEXPR OR M . BOOLEXPR   (rule 18)
+    TERM  ->  UN IDEN OPR B .   (rule 46)
 
-    '-' 	shift, and go to state 1
-    '(' 	shift, and go to state 2
-    TR  	shift, and go to state 41
-    FL  	shift, and go to state 42
-
-    $default	reduce using rule 57 (UN)
-
-    BOOLEXPR	go to state 92
-    EXPR	go to state 44
-    TERM	go to state 10
-    UN  	go to state 11
+    $default	reduce using rule 46 (TERM)
 
 
 
 state 83
 
-    BOOLEXPR  ->  BOOLEXPR AND M . BOOLEXPR   (rule 19)
+    TERM  ->  UN OPR IDEN B .   (rule 45)
+
+    $default	reduce using rule 45 (TERM)
+
+
+
+state 84
+
+    BOOLEXPR  ->  BOOLEXPR OR M . BOOLEXPR   (rule 18)
 
     '-' 	shift, and go to state 1
     '(' 	shift, and go to state 2
-    TR  	shift, and go to state 41
-    FL  	shift, and go to state 42
+    TR  	shift, and go to state 42
+    FL  	shift, and go to state 43
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    BOOLEXPR	go to state 93
-    EXPR	go to state 44
+    BOOLEXPR	go to state 94
+    EXPR	go to state 45
     TERM	go to state 10
     UN  	go to state 11
 
 
 
-state 84
+state 85
+
+    BOOLEXPR  ->  BOOLEXPR AND M . BOOLEXPR   (rule 19)
+
+    '-' 	shift, and go to state 1
+    '(' 	shift, and go to state 2
+    TR  	shift, and go to state 42
+    FL  	shift, and go to state 43
+
+    $default	reduce using rule 63 (UN)
+
+    BOOLEXPR	go to state 95
+    EXPR	go to state 45
+    TERM	go to state 10
+    UN  	go to state 11
+
+
+
+state 86
 
     A  ->  IF '(' BOOLEXPR ')' M . A   (rule 3)
     A  ->  IF '(' BOOLEXPR ')' M . A ELSE NN M A   (rule 4)
@@ -1237,9 +1297,9 @@ state 84
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    A   	go to state 94
+    A   	go to state 96
     ASNEXPR	go to state 8
     EXPR	go to state 9
     TERM	go to state 10
@@ -1247,7 +1307,7 @@ state 84
 
 
 
-state 85
+state 87
 
     BOOLEXPR  ->  EXPR LT EXPR .   (rule 20)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1255,6 +1315,7 @@ state 85
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1264,9 +1325,11 @@ state 85
 
     $default	reduce using rule 20 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 86
+
+state 88
 
     BOOLEXPR  ->  EXPR GT EXPR .   (rule 21)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1274,6 +1337,7 @@ state 86
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1283,9 +1347,11 @@ state 86
 
     $default	reduce using rule 21 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 87
+
+state 89
 
     BOOLEXPR  ->  EXPR LE EXPR .   (rule 24)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1293,6 +1359,7 @@ state 87
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1302,9 +1369,11 @@ state 87
 
     $default	reduce using rule 24 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 88
+
+state 90
 
     BOOLEXPR  ->  EXPR GE EXPR .   (rule 25)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1312,6 +1381,7 @@ state 88
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1321,9 +1391,11 @@ state 88
 
     $default	reduce using rule 25 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 89
+
+state 91
 
     BOOLEXPR  ->  EXPR EQ EXPR .   (rule 22)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1331,6 +1403,7 @@ state 89
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1340,9 +1413,11 @@ state 89
 
     $default	reduce using rule 22 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 90
+
+state 92
 
     BOOLEXPR  ->  EXPR NE EXPR .   (rule 23)
     EXPR  ->  EXPR . '+' EXPR   (rule 31)
@@ -1350,6 +1425,7 @@ state 90
     EXPR  ->  EXPR . '*' EXPR   (rule 33)
     EXPR  ->  EXPR . '/' EXPR   (rule 34)
     EXPR  ->  EXPR . '%' EXPR   (rule 35)
+    EXPR  ->  EXPR . OP ';'   (rule 38)
 
     '+' 	shift, and go to state 26
     '-' 	shift, and go to state 27
@@ -1359,31 +1435,33 @@ state 90
 
     $default	reduce using rule 23 (BOOLEXPR)
 
+    OP  	go to state 34
 
 
-state 91
+
+state 93
 
     A  ->  WHILE M '(' BOOLEXPR ')' . M A   (rule 6)
 
     $default	reduce using rule 28 (M)
 
-    M   	go to state 95
+    M   	go to state 97
 
 
 
-state 92
+state 94
 
     BOOLEXPR  ->  BOOLEXPR . OR M BOOLEXPR   (rule 18)
     BOOLEXPR  ->  BOOLEXPR OR M BOOLEXPR .   (rule 18)
     BOOLEXPR  ->  BOOLEXPR . AND M BOOLEXPR   (rule 19)
 
-    AND 	shift, and go to state 68
+    AND 	shift, and go to state 70
 
     $default	reduce using rule 18 (BOOLEXPR)
 
 
 
-state 93
+state 95
 
     BOOLEXPR  ->  BOOLEXPR . OR M BOOLEXPR   (rule 18)
     BOOLEXPR  ->  BOOLEXPR . AND M BOOLEXPR   (rule 19)
@@ -1394,18 +1472,18 @@ state 93
 
 
 
-state 94
+state 96
 
     A  ->  IF '(' BOOLEXPR ')' M A .   (rule 3)
     A  ->  IF '(' BOOLEXPR ')' M A . ELSE NN M A   (rule 4)
 
-    ELSE	shift, and go to state 96
+    ELSE	shift, and go to state 98
 
     $default	reduce using rule 3 (A)
 
 
 
-state 95
+state 97
 
     A  ->  WHILE M '(' BOOLEXPR ')' M . A   (rule 6)
 
@@ -1415,9 +1493,9 @@ state 95
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    A   	go to state 97
+    A   	go to state 99
     ASNEXPR	go to state 8
     EXPR	go to state 9
     TERM	go to state 10
@@ -1425,17 +1503,17 @@ state 95
 
 
 
-state 96
+state 98
 
     A  ->  IF '(' BOOLEXPR ')' M A ELSE . NN M A   (rule 4)
 
     $default	reduce using rule 29 (NN)
 
-    NN  	go to state 98
+    NN  	go to state 100
 
 
 
-state 97
+state 99
 
     A  ->  WHILE M '(' BOOLEXPR ')' M A .   (rule 6)
 
@@ -1443,17 +1521,17 @@ state 97
 
 
 
-state 98
+state 100
 
     A  ->  IF '(' BOOLEXPR ')' M A ELSE NN . M A   (rule 4)
 
     $default	reduce using rule 28 (M)
 
-    M   	go to state 99
+    M   	go to state 101
 
 
 
-state 99
+state 101
 
     A  ->  IF '(' BOOLEXPR ')' M A ELSE NN M . A   (rule 4)
 
@@ -1463,9 +1541,9 @@ state 99
     WHILE	shift, and go to state 4
     '{' 	shift, and go to state 5
 
-    $default	reduce using rule 57 (UN)
+    $default	reduce using rule 63 (UN)
 
-    A   	go to state 100
+    A   	go to state 102
     ASNEXPR	go to state 8
     EXPR	go to state 9
     TERM	go to state 10
@@ -1473,7 +1551,7 @@ state 99
 
 
 
-state 100
+state 102
 
     A  ->  IF '(' BOOLEXPR ')' M A ELSE NN M A .   (rule 4)
 
@@ -1481,18 +1559,18 @@ state 100
 
 
 
-state 101
-
-    $   	go to state 102
-
-
-
-state 102
-
-    $   	go to state 103
-
-
-
 state 103
+
+    $   	go to state 104
+
+
+
+state 104
+
+    $   	go to state 105
+
+
+
+state 105
 
     $default	accept
