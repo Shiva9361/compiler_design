@@ -212,6 +212,8 @@ typedef
 #define	IDEN	274
 #define	NUM	275
 #define	IF	276
+#define	TR	277
+#define	FL	278
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -279,6 +281,8 @@ static const int ELSE;
 static const int IDEN;
 static const int NUM;
 static const int IF;
+static const int TR;
+static const int FL;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -306,6 +310,8 @@ static const int IF;
 	,IDEN=274
 	,NUM=275
 	,IF=276
+	,TR=277
+	,FL=278
 
 
 #line 215 "/usr/share/bison++/bison.h"

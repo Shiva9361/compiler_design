@@ -78,7 +78,7 @@ void backpatch(struct Node* a,int addr){
 %nonassoc '(' ')'
 %nonassoc UMINUS ELSE IDEN
 %nonassoc ';'
-%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE
+%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL
 %type <str> ASSGN UN OPR 
 %type <expr>  EXPR TERM
 %type <b> BOOLEXPR STMNTS A ASNEXPR NN
@@ -133,14 +133,14 @@ ASSGN: '=' {strcpy($$,"=");}
 
 BOOLEXPR:     
 	| BOOLEXPR OR M BOOLEXPR {  backpatch($1->F,$3);
-							 	// $$ = createBoolNode();	
-								// $$->T = merge($1->T,$4->T);
-								// $$->F = $4->F;
+							 	$$ = createBoolNode();	
+								$$->T = merge($1->T,$4->T);
+								$$->F = $4->F;
 							 }
     | BOOLEXPR AND M BOOLEXPR {	backpatch($1->T,$3);
-								// $$ = createBoolNode();
-								// $$->T = $4->T;
-								// $$->F = merge($1->F,$4->F);
+								$$ = createBoolNode();
+								$$->T = $4->T;
+								$$->F = merge($1->F,$4->F);
 								}
 	| EXPR LT EXPR  {if(!e) {sprintf(imcode[code],"%d if %s %s %s goto ",code,$1->str,$2,$3->str);
 							$$ = createBoolNode();
@@ -179,7 +179,20 @@ BOOLEXPR:
 							$$->T = createNode(code);
 							code++;
 							sprintf(imcode[code],"%d goto ",code);
-							$$->F = createNode(code);code++;}} ;
+							$$->F = createNode(code);code++;}} 
+	| TR {if (!e){
+		$$ = createBoolNode();
+		$$->T = createNode(code);
+		sprintf(imcode[code],"%d goto ",code);
+		code++;
+	}}
+	
+	| FL {if (!e){
+		$$ = createBoolNode();
+		$$->F = createNode(code);
+		sprintf(imcode[code],"%d goto ",code);
+		code++;
+	}};
 
 M: {$$=code;};
 NN: {$$=createBoolNode();
