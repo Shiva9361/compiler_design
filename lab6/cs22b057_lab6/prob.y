@@ -1,4 +1,5 @@
 %{
+#include<stdio.h>
 #include<string.h>
 extern FILE *yyin;
 extern char buffer[];
@@ -42,8 +43,12 @@ A: IDEN ASSGN {if (yychar=='+' || yychar == '/' || yychar == '%' || yychar == '*
 							buffer[0]='\0';imcode[0]='\0';
 						}
 					}
-	| error ';' {if (e){e=0;err[0]='\0';}printf("%s -> Rejected -> Invalid Statement -> Could not generate Three Address Code\n",buffer);yyerrok;buffer[0]='\0';imcode[0]='\0';} ;
-
+	| error ';' {if (e){    
+						printf("%s ->Rejected -> %s -> Could not generate Three Address Code\n",buffer,err);
+                        e=0;err[0]="\0";buffer[0]='\0';imcode[0]='\0';} 
+				 else{
+						printf("%s -> Rejected -> Invalid Statement -> Could not generate Three Address Code\n",buffer);yyerrok;buffer[0]='\0';imcode[0]='\0';} 
+					};
 ASSGN: '=' {strcpy($$,"=");}
 	 | PASN {strcpy($$,$1);}
 	 | MASN {strcpy($$,$1);}
@@ -98,6 +103,11 @@ UN : '-' {strcpy($$,"-");} | {strcpy($$,"");} ;
 
 %%
 
+void findfloat(char* t){
+	int ans=0;
+	while(t!='\0') if (t++=='.') ans=1;
+	return ans;
+}
 
 char* genvar(){
 	char *re = (char*)malloc(sizeof(char)*100);

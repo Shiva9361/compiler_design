@@ -13,9 +13,12 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 13 "prob.y"
+#line 63 "prob.y"
 typedef union{
 	char str[1000];
+	struct BoolNode* b;
+	struct Expr *expr;
+	int addr;
 } yy_parse_stype;
 #define YY_parse_STYPE yy_parse_stype
 #ifndef YY_USE_CLASS
@@ -194,11 +197,21 @@ typedef
 #define	MASN	259
 #define	DASN	260
 #define	SASN	261
-#define	INC	262
-#define	DEC	263
-#define	UMINUS	264
-#define	IDEN	265
-#define	NUM	266
+#define	OR	262
+#define	AND	263
+#define	LT	264
+#define	GT	265
+#define	LE	266
+#define	GE	267
+#define	EQ	268
+#define	NE	269
+#define	INC	270
+#define	DEC	271
+#define	UMINUS	272
+#define	ELSE	273
+#define	IDEN	274
+#define	NUM	275
+#define	IF	276
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -251,11 +264,21 @@ static const int PASN;
 static const int MASN;
 static const int DASN;
 static const int SASN;
+static const int OR;
+static const int AND;
+static const int LT;
+static const int GT;
+static const int LE;
+static const int GE;
+static const int EQ;
+static const int NE;
 static const int INC;
 static const int DEC;
 static const int UMINUS;
+static const int ELSE;
 static const int IDEN;
 static const int NUM;
+static const int IF;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -268,11 +291,21 @@ static const int NUM;
 	,MASN=259
 	,DASN=260
 	,SASN=261
-	,INC=262
-	,DEC=263
-	,UMINUS=264
-	,IDEN=265
-	,NUM=266
+	,OR=262
+	,AND=263
+	,LT=264
+	,GT=265
+	,LE=266
+	,GE=267
+	,EQ=268
+	,NE=269
+	,INC=270
+	,DEC=271
+	,UMINUS=272
+	,ELSE=273
+	,IDEN=274
+	,NUM=275
+	,IF=276
 
 
 #line 215 "/usr/share/bison++/bison.h"
