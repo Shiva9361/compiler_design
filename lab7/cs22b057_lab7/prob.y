@@ -78,7 +78,7 @@ void backpatch(struct Node* a,int addr){
 %nonassoc '(' ')'
 %nonassoc UMINUS ELSE IDEN
 %nonassoc ';'
-%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL
+%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL WHILE EOF
 %type <str> ASSGN UN OPR 
 %type <expr>  EXPR TERM
 %type <b> BOOLEXPR STMNTS A ASNEXPR NN
@@ -87,11 +87,11 @@ void backpatch(struct Node* a,int addr){
 
 S: 	STMNTS M {
 	if (e){
-			printf("%s Rejected -> %s -> Could not generate Three Address Code\n",buffer,err);
+			printf("%s\nRejected -> %s -> Could not generate Three Address Code\n",buffer,err);
 			e=0;err[0]="\0";buffer[0]='\0';} 
  		else {	
 			backpatch($1->N,$2); // for last statement
-			printf("%s Accepted -> \nThree Address Code:\n",buffer);
+			printf("%s\nAccepted -> Three Address Code:\n",buffer);
 			for (int i=0;i<code;i++){
 				printf("%s",imcode[i]);
 			}
@@ -108,22 +108,31 @@ A: ASNEXPR ';' {if (!e){$$ = $1;}}
 		backpatch($3->F,$9);
 		$$ = createBoolNode();
 		$$->N = merge(merge($6->N,$8->N),$10);
-	}
-	}
+	}}
 	| IF error {if (!e){strcpy(err,"missing (");yyerrok;e=1;}}
+	| WHILE M '(' BOOLEXPR ')' M A{if (!e){
+		backpatch($7->N,$2);
+		backpatch($4->T,$6);
+		$$ = createBoolNode();
+		$$->N = $4->F;
+		sprintf(imcode[code],"%d goto %d\n",code,$2);
+		code++;
+		}}
 	| '{' STMNTS '}' {if (!e) {
 						$$ = createBoolNode();
 						$$->N = $2->N;
 						}} 
 	| EXPR ';'{;}
-	| EXPR error {if (!e) {strcpy(err,"; missing");yyerrok;e=1;}}
-	| error ';' {if (!e){strcpy(err,"Invalid Statement");}yyerrok;e=1;};
+	| EXPR error {if (!e) {strcpy(err,"; missing");yyerrok;e=1;}};
 
 STMNTS: STMNTS M A {if (!e){backpatch($1->N,$2);
 					$$ = createBoolNode();
 					$$->N = $3->N;}} 
 	| A M{if (!e){$$ = createBoolNode();
 		$$->N = $1->N;}};
+	| STMNTS error{if (!e){ // To skip random statements and not crash
+		e=1;strcpy(err,"Invalid Statement");
+	}}
 
 ASSGN: '=' {strcpy($$,"=");}
 	 | PASN {strcpy($$,$1);}
@@ -132,7 +141,7 @@ ASSGN: '=' {strcpy($$,"=");}
      | SASN {strcpy($$,$1);} ;
 
 BOOLEXPR:     
-	| BOOLEXPR OR M BOOLEXPR {  backpatch($1->F,$3);
+	 BOOLEXPR OR M BOOLEXPR {  backpatch($1->F,$3);
 							 	$$ = createBoolNode();	
 								$$->T = merge($1->T,$4->T);
 								$$->F = $4->F;

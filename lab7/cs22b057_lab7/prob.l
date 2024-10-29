@@ -30,8 +30,9 @@ ws [\n\t ]
 "!=" {append(yytext);strcpy(yylval.str,yytext);return NE;}
 "||" {append(yytext);strcpy(yylval.str,yytext);return OR;}
 "&&" {append(yytext);strcpy(yylval.str,yytext);return AND;}
-"true" {append(yytext);strcpy(yylval.str,yytext);return TR;}
-"false" {append(yytext);strcpy(yylval.str,yytext);return FL;}
+true {append(yytext);strcpy(yylval.str,yytext);return TR;}
+false {append(yytext);strcpy(yylval.str,yytext);return FL;}
+while {append(yytext);strcpy(yylval.str,yytext);return WHILE;}
 if   {append(yytext);strcpy(yylval.str,yytext);return IF;}
 else {append(yytext);strcpy(yylval.str,yytext);return ELSE;}
 ({num}|{num2}) {append(yytext);strcpy(yylval.str,yytext);return NUM;} 

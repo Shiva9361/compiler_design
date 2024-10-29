@@ -214,6 +214,8 @@ typedef
 #define	IF	276
 #define	TR	277
 #define	FL	278
+#define	WHILE	279
+#define	EOF	280
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -283,6 +285,8 @@ static const int NUM;
 static const int IF;
 static const int TR;
 static const int FL;
+static const int WHILE;
+static const int EOF;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -312,6 +316,8 @@ static const int FL;
 	,IF=276
 	,TR=277
 	,FL=278
+	,WHILE=279
+	,EOF=280
 
 
 #line 215 "/usr/share/bison++/bison.h"

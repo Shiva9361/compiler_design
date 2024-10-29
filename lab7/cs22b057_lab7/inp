@@ -1,9 +1,9 @@
 
-if (a < 4 || a < 5 && true)
+while (a < 4 || a < 5 && false)
 {
-	a = a;
+	c = 1;
 }
-else
+if (a < 10)
 {
-	b++;
+	a = 1;
 }
