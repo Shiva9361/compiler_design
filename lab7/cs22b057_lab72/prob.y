@@ -71,15 +71,14 @@ void backpatch(struct Node* a,int addr){
 %nonassoc PASN MASN DASN SASN
 %left OR 
 %left AND
-%nonassoc '!'
 %left LT GT LE GE EQ NE
 %left '+' '-'
 %left '/' '*' '%'
 %nonassoc INC DEC
 %nonassoc '(' ')'
-%nonassoc UMINUS ELSE IDEN 
+%nonassoc UMINUS ELSE IDEN
 %nonassoc ';'
-%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL WHILE 
+%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL WHILE EOF
 %type <str> ASSGN UN OPR 
 %type <expr>  EXPR TERM
 %type <b> BOOLEXPR STMNTS A ASNEXPR NN
@@ -123,7 +122,6 @@ A: ASNEXPR ';' {if (!e){$$ = $1;}}
 						$$ = createBoolNode();
 						$$->N = $2->N;
 						}} 
-	| '{' '}' {if (!e){$$=createBoolNode();}}
 	| EXPR ';'{;}
 	| EXPR error {if (!e) {strcpy(err,"; missing");yyerrok;e=1;}};
 
@@ -131,11 +129,10 @@ STMNTS: STMNTS M A {if (!e){backpatch($1->N,$2);
 					$$ = createBoolNode();
 					$$->N = $3->N;}} 
 	| A M{if (!e){$$ = createBoolNode();
-		$$->N = $1->N;}}
+		$$->N = $1->N;}};
 	| STMNTS error{if (!e){ // To skip random statements and not crash
 		e=1;strcpy(err,"Invalid Statement");
-	}};
-
+	}}
 
 ASSGN: '=' {strcpy($$,"=");}
 	 | PASN {strcpy($$,$1);}
@@ -154,16 +151,6 @@ BOOLEXPR:
 								$$->T = $4->T;
 								$$->F = merge($1->F,$4->F);
 								}
-	| '!' BOOLEXPR {
-		$$ = createBoolNode();
-		$$->T = $2->F;
-		$$->F = $2->T;
-	}
-	| '(' BOOLEXPR ')' {
-		$$ = createBoolNode();
-		$$->T = $2->T;
-		$$->F = $2->F;
-	}
 	| EXPR LT EXPR  {if(!e) {sprintf(imcode[code],"%d if %s %s %s goto ",code,$1->str,$2,$3->str);
 							$$ = createBoolNode();
 							$$->T = createNode(code);
@@ -240,7 +227,7 @@ EXPR: EXPR '+' EXPR {if (!e){char* t = genvar();$$ = createExpr();strcpy($$->str
 	| EXPR '/' EXPR {if (!e){char* t = genvar();$$ = createExpr();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s / %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
 	| EXPR '%' EXPR {if (!e){char* t = genvar();$$ = createExpr();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s % %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
 	| '(' EXPR ')'  {if (!e){strcpy($$->str,$2->str);}}
-    /* | '(' EXPR error {e=1;strcpy(err,"missing R-Paren");yyerrok;} */
+    | '(' EXPR error {e=1;strcpy(err,"missing R-Paren");yyerrok;}
 	| EXPR OP ';'{e=1;strcpy(err,"Missing operand");yyerrok;}
     | TERM {$$ = createExpr();strcpy($$->str,$1);$$->lv=$1->lv;};
 
@@ -313,6 +300,12 @@ UN : '-' {strcpy($$,"-");} | {strcpy($$,"");} ;
 
 %%
 
+void findfloat(char* t){
+	int ans=0;
+	while(t!='\0') if (t++=='.') ans=1;
+	return ans;
+}
+
 char* genvar(){
 	char *re = (char*)malloc(sizeof(char)*100);
     sprintf(re,"t%d",label);
@@ -321,7 +314,7 @@ char* genvar(){
 }
 
 int yyerror(char* msg){
-	printf("%s\nRejected -> Invalid Statement -> Could not generate Three Address Code\n",buffer);
+	/* printf("%s",msg); */
 	return 0;
 }
 

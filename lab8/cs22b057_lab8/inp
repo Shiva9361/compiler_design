@@ -1,8 +1,21 @@
-while (a < 4 || a < 5 && false)
+if (!(g > l)
 {
-	c = 1;
+	y *= l;
+	while (j > l)
+	{
+		if (h <= l)
+		{
+			j++;
+		}
+		else
+		{
+			k++;
+		}
+	}
+	j = k;
+	b++;
 }
-if (a < 10)
+else
 {
-	a = 1;
+	h = i;
 }
