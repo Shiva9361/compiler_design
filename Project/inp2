@@ -1,0 +1,13 @@
+{
+    /**
+     * Redeclaration and conflicting type
+     * Undeclared
+     */
+    int a;
+    char a;
+    {
+        int c;
+        int c;
+        z = a-- + c++;
+    }
+}

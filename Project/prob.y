@@ -28,6 +28,8 @@ struct Type{
 struct Decl{
 	char key[1000];
 	char type[1000];
+	char lt[100];
+	char op[100];
 	int size;
 	int re;
 	struct Decl* next;
@@ -274,8 +276,8 @@ void checkTypeAssign(struct Expr* op1,struct Expr* op2,char*opr ){
 %nonassoc '(' ')'
 %nonassoc UMINUS ELSE IDEN 
 %nonassoc ';'
-%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL WHILE INT FLOAT CHAR
-%token EOF
+%token <str> IDEN NUM PASN MASN DASN SASN INC DEC LT GT LE GE NE OR AND EQ IF ELSE TR FL WHILE INT FLOAT CHAR CHARR
+%token MEOF
 %type <str> ASSGN UN OPR 
 %type <expr>  EXPR TERM
 %type <b> BOOLEXPR STMNTS A ASNEXPR NN
@@ -284,7 +286,7 @@ void checkTypeAssign(struct Expr* op1,struct Expr* op2,char*opr ){
 %type <decl> DECLLIST
 %%
 
-S: 	{top = create_env(top,0);} STMNTS M EOF {
+S: 	{top = create_env(top,0);} STMNTS M MEOF{
 	if (e){
 			printf("%s\nRejected \n%s \nCould not generate Three Address Code / Storage Layout\n",buffer,err);
 			e=0;err[0]="\0";buffer[0]='\0';} 
@@ -297,14 +299,18 @@ S: 	{top = create_env(top,0);} STMNTS M EOF {
 			print_all_envs(top);
 			
 		}YYACCEPT;} 
-	| EOF{YYACCEPT;}
-	| error EOF {e=1;strcpy(err,"Invalid Statements");
+	| MEOF{YYACCEPT;}
+	| error MEOF{e=1;strcpy(err,"Invalid Statements");
 		printf("%s \nRejected -> %s \nCould not generate Three Address Code / Storage Layout\n",buffer,err);
 		YYACCEPT; // stop the parsing
 		};
 	
 
 A: ASNEXPR ';' {if (!e){$$ = $1;}}
+	| ASNEXPR error MEOF{strcat(err,"; missing\n");yyerrok;e=1;
+							printf("%s\nRejected -> %s -> Could not generate Three Address Code / Storage Layout\n",buffer,err);
+							YYACCEPT; // stop the parsing
+							}
 	| IF '(' BOOLEXPR ')' M  A {if (!e){backpatch($3->T,$5);
 										$$ = createBoolNode();
 										$$->N = merge($3->F,$6->N);
@@ -315,11 +321,11 @@ A: ASNEXPR ';' {if (!e){$$ = $1;}}
 		$$ = createBoolNode();
 		$$->N = merge(merge($6->N,$8->N),$10);
 	}}
-
-	| IF error EOF {if (!e){strcpy(err,"missing (");yyerrok;e=1;}
-					printf("%s \nRejected -> %s -> Could not generate Three Address Code / Storage Layout\n",buffer,err);
-					YYACCEPT; // stop the parsing or else loop
-					}
+	| EXPR error MEOF{{strcat(err,"; missing");yyerrok;e=1;}
+							printf("%s\nRejected -> %s -> Could not generate Three Address Code / Storage Layout\n",buffer,err);
+							YYACCEPT; // stop the parsing
+							}
+	| IF BOOLEXPR ')' M A ELSE NN M A{{strcat(err,"missing (\n");e=1;}}
 
 	| WHILE M '(' BOOLEXPR ')' M A{if (!e){
 		backpatch($7->N,$2);
@@ -329,6 +335,7 @@ A: ASNEXPR ';' {if (!e){$$ = $1;}}
 		sprintf(imcode[code],"%d goto %d\n",code,$2);
 		code++;
 		}}
+	| WHILE M  BOOLEXPR ')' M A{{strcat(err,"missing (\n");e=1;}}
 	| '{' {top = create_env(top,offset);offset=0;} STMNTS '}' {if (!e) {
 						$$ = createBoolNode();
 						$$->N = $3->N;
@@ -338,10 +345,6 @@ A: ASNEXPR ';' {if (!e){$$ = $1;}}
 						}} 
 	| '{' '}' {if (!e){$$=createBoolNode();}}
 	| EXPR ';'{if (!e) {$$=createBoolNode();}}
-	| EXPR error EOF {if (!e) 	{strcpy(err,"; missing");yyerrok;e=1;}
-							printf("%s\nRejected -> %s -> Could not generate Three Address Code / Storage Layout\n",buffer,err);
-							YYACCEPT; // stop the parsing
-							};
 	| DECLSTATEMENT {if (!e){$$=createBoolNode();}};
 
 DECLSTATEMENT: TYPE DECLLIST ';' {
@@ -370,10 +373,20 @@ DECLSTATEMENT: TYPE DECLLIST ';' {
 			strcpy(s->type,temp->type);
 			sprintf(s->type+strlen(s->type),"%s %d",$1,temp->size*$1->size);
 		}
+		if (strcmp(temp->lt,"u")==0){}
+		else if (strcmp($1,temp->lt)==0){
+			sprintf(imcode[code],"%d %s = %s\n",code,temp->key,temp->op);code++;
+		}
+		else{
+			sprintf(imcode[code],"%d %s = (%s) %s\n",code,temp->key,$1,temp->op);code++;
+		}
 
 		temp = temp->next;
-	}
-};
+	}}
+	| TYPE DECLLIST  error MEOF{{strcat(err,"; missing\n");yyerrok;e=1;}
+							printf("%s\nRejected -> %s -> Could not generate Three Address Code / Storage Layout\n",buffer,err);
+							YYACCEPT; }
+;
 
 DECLLIST: IDEN ',' DECLLIST {if (get(top->table,$1)==NULL){
 								Symbol* s = createSymbol($1);
@@ -385,7 +398,7 @@ DECLLIST: IDEN ',' DECLLIST {if (get(top->table,$1)==NULL){
 								$$ = createDecl($1);
 								strcpy($$->type,"");
 								$$->re =1;
-								}
+								}strcpy($$->lt,"u");
 						}
 	| IDEN INDEX ',' DECLLIST {
 				if (get(top->table,$1)==NULL){
@@ -400,7 +413,7 @@ DECLLIST: IDEN ',' DECLLIST {if (get(top->table,$1)==NULL){
 					$$ = createDecl($1);
 					strcpy($$->type,"");
 					$$->re =1;
-				}
+				}strcpy($$->lt,"u");
 	}
 	| IDEN {if (get(top->table,$1)==NULL){
 						Symbol* s = createSymbol($1);
@@ -411,16 +424,20 @@ DECLLIST: IDEN ',' DECLLIST {if (get(top->table,$1)==NULL){
 						$$ = createDecl($1);
 						strcpy($$->type,"");
 						$$->re = 1;
-						}}
-	| IDEN '=' EXPR {sprintf(imcode[code],"%d %s = %s\n",code,$1,$3);code++;
+						}strcpy($$->lt,"u");}
+	| IDEN '=' EXPR {//sprintf(imcode[code],"%d %s = %s\n",code,$1,$3);code++;
 					if (get(top->table,$1)==NULL){
 						Symbol* s = createSymbol($1);
 						put(top->table,$1,s);
 						$$ = createDecl($1);
+						strcpy($$->lt,$3->type);
+						strcpy($$->op,$3->str);
 						}
 					else{
 						$$ = createDecl($1);
 						strcpy($$->type,"");
+						strcpy($$->lt,$3->type);
+						strcpy($$->op,$3->str);
 						$$->re=1;
 					}}
 	| IDEN INDEX {if (get(top->table,$1)==NULL){
@@ -434,7 +451,7 @@ DECLLIST: IDEN ',' DECLLIST {if (get(top->table,$1)==NULL){
 						$$ = createDecl($1);
 						strcpy($$->type,"");
 						$$->re=1;
-					}};
+					}strcpy($$->lt,"u");};
 
 INDEX: '[' NUM ']' {$$ = createType();$$->size=atoi($2);sprintf($$->str,"array ");
 					if (checkfloat($2)){
@@ -560,17 +577,17 @@ ASNEXPR: EXPR ASSGN EXPR {if (!e && $1->lv){
 							}
 							$$ = createBoolNode();
 							}
-							if (!$1->lv){e=1;strcpy(err,"L value not assignable");}}
+							if (!$1->lv){e=1;strcat(err,"L value not assignable\n");}}
 
 EXPR: EXPR '+' EXPR {if (!e){$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s + %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
     | EXPR '-' EXPR {if (!e){$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s - %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
     | EXPR '*' EXPR {if (!e){$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s * %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
 	| EXPR '/' EXPR {if (!e){$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s / %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
-	| EXPR '%' EXPR {if (!e){if (strcmp($3->type,"float")==0 || strcmp($1->type,"float")==0){e=1;sprintf(err+strlen(err),"invalid operands to binary % (float)");}$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s %% %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
-	| '(' EXPR ')'  {if (!e){strcpy($$->str,$2->str);}}
+	| EXPR '%' EXPR {if (!e){if (strcmp($3->type,"float")==0 || strcmp($1->type,"float")==0){e=1;sprintf(err+strlen(err),"invalid operands to binary % (float)\n");}$$ = createExpr();char* ct1 = (char*)malloc(sizeof(char));strcpy(ct1,"");char* ct2 = (char*)malloc(sizeof(char));strcpy(ct2,"");checkType($1,$3,ct1,ct2,$$->type);if(strcmp(ct1,"")){strcpy($1->str,ct1);}if(strcmp(ct2,"")){strcpy($3->str,ct2);}char* t = genvar();strcpy($$->str,t);sprintf(imcode[code],"%d %s = %s %% %s\n",code,t,$1->str,$3->str);code++;$$->lv=0;}}
+	| '(' EXPR ')'  {if (!e){$$ = createExpr();strcpy($$->str,$2->str);}}
     /* | '(' EXPR error {e=1;strcpy(err,"missing R-Paren");yyerrok;} */
 	| EXPR OP ';'{e=1;strcpy(err,"Missing operand");yyerrok;}
-    | TERM {$$ = $1};
+    | TERM {$$ = $1;};
 
 OP: '+' | '-' | '*' | '/' | '%';
 TERM: UN OPR IDEN B  {if (strcmp($1,"-")){

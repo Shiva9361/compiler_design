@@ -1,3 +1,9 @@
+/*
+ *
+ * Multi Line comment
+ * L values
+ * Mod
+ * */
 {
 
     int a;
@@ -6,4 +12,5 @@
     int z;
     z = a + b * c;
     z = a % 3.4;
+    z++ = z;
 }

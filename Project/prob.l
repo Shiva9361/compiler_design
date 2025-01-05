@@ -15,7 +15,8 @@ num [[:digit:]]+\.?[[:digit:]]*
 num2 [[:digit:]]*\.?[[:digit:]]+
 ws [\n\t ]
 %%
-
+"//".*                     {}
+"/*"([^*]|\*+[^/*])*\*+"/" {}
 "++" {append(yytext);strcpy(yylval.str,yytext);return INC;}
 "--" {append(yytext);strcpy(yylval.str,yytext);return DEC;}
 "+=" {append(yytext);strcpy(yylval.str,yytext);return PASN;}
@@ -41,7 +42,7 @@ char {append(yytext);strcpy(yylval.str,yytext);return CHAR;}
 ({num}|{num2}) {append(yytext);strcpy(yylval.str,yytext);return NUM;} 
 {iden} {append(yytext);strcpy(yylval.str,yytext);return IDEN;}
 {ws} {append(yytext);}
-<<EOF>> {return EOF;}
+<<EOF>> {return MEOF;}
 . {append(yytext);strcpy(yylval.str,yytext);return yytext[0];}
 
 
